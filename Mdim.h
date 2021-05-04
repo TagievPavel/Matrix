@@ -8,14 +8,9 @@ struct Mdim
 	std::size_t m{}, n{};
 };
 
-bool operator == (const Mdim& lhv, const Mdim& rhv) noexcept
+bool dequal (const Mdim& lhv, const Mdim& rhv) noexcept
 {
 	return lhv.m == rhv.m && lhv.n == rhv.n;
-}
-
-bool operator != (const Mdim& lhv, const Mdim& rhv) noexcept
-{
-	return !(lhv == rhv);
 }
 
 bool canmul(const Mdim& lhv, const Mdim& rhv) noexcept
