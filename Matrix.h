@@ -44,6 +44,8 @@ public:
 
 	Matrix<Type> transpose() const;
 
+	Matrix<Type> norm() const;
+
 public:
 	Matrix<Type>& operator = (const Matrix<Type>& other);
 	Matrix<Type>& operator = (Matrix<Type>&& other) noexcept;
@@ -114,6 +116,31 @@ inline Matrix<Type> Matrix<Type>::transpose() const
 			transposed(i, j) = (*this)(j, i);
 
 	return transposed;
+}
+
+template<typename Type>
+inline Matrix<Type> Matrix<Type>::norm() const
+{
+	auto normd(*this);
+
+	for (std::size_t i = 2; i--;)
+	{
+		normd.grid.erase(std::remove_if(normd.grid.begin(), normd.grid.end(),
+			[](const auto& line) 
+			{ 
+				for (const auto& element : line)
+					if (!is_equal(element, Type{}))
+						return false;
+
+				return true;
+			}), 
+		normd.grid.end());
+
+		normd.mdim.m = normd.grid.size();
+		normd        = normd.transpose();
+	}
+
+	return normd;
 }
 
 template<typename Type>
