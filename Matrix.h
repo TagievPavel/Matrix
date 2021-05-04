@@ -107,6 +107,12 @@ inline Matrix<Type> Matrix<Type>::transpose() const
 {
 	Matrix<Type> transposed(mdim.n, mdim.m);
 
+	const auto tdim = transposed.dim();
+
+	for (std::size_t i{}; i < tdim.m; ++i)
+		for (std::size_t j{}; j < tdim.n; ++j)
+			transposed(i, j) = (*this)(j, i);
+
 	return transposed;
 }
 
